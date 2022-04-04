@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package product_contract;
+
+service Actions {
+  rpc CreateProduct(CreateRequest) returns (CreateResponse) {}
+  rpc GetProduct(GetOrDeleteRequest) returns (GetResponse) {}
+  rpc ListProducts(Empty) returns (ListResponse) {}
+  rpc DeleteProduct(GetOrDeleteRequest) returns (DeleteResponse) {}
+}
+
+message Payload {
+  int32 id = 1;
+  string name = 2;
+  string category = 3;
+  float price = 4;
+  int32 quantity = 5;
+}
+
+message CreateRequest {
+  string name = 1;
+  string category = 2;
+  float price = 3;
+  int32 quantity = 4;
+}
+
+message GetOrDeleteRequest {
+  int32 id = 1;
+}
+
+message GetResponse {
+  StatusCode status = 1;
+  Payload payload = 2;
+}
+
+message ListResponse {
+  StatusCode status = 1;
+  repeated Payload payload = 2;
+}
+
+message CreateResponse {
+  StatusCode status = 1;
+  int32 id = 2;
+}
+
+message DeleteResponse {
+  StatusCode status = 1;
+}
+
+message StatusCode {
+  int32 code = 1;
+}
+
+message Empty {}
